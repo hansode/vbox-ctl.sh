@@ -44,7 +44,9 @@ function setup_vm() {
 
   # eth0
   VBoxManage modifyvm ${name} --nic1 nat --nictype1 virtio --cableconnected1 on
-  VBoxManage modifyvm ${name} --natpf1 ssh,tcp,127.0.0.1,2222,,22
+  for forward_rule in ${forward_rules}; do
+    VBoxManage modifyvm ${name} --natpf1 ${forward_rule}
+  done
 
   # hdd
   VBoxManage storagectl    ${name} --name       IDE --add ide --hostiocache on
@@ -75,6 +77,8 @@ function show_vm() {
 
 cmd=${1:-status}
 name=${2:-sandbox}
+
+forward_rules=${forward_rules:-"ssh,tcp,127.0.0.1,2222,,22"}
 
 case "${cmd}" in
   setup)
