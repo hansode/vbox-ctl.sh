@@ -78,7 +78,7 @@ function show_vm() {
 cmd=${1:-status}
 name=${2:-sandbox}
 
-forward_rules=${forward_rules:-"ssh,tcp,127.0.0.1,2222,,22"}
+forward_rules=${forward_rules:-"ssh,tcp,127.0.0.1,2022,,22"}
 
 case "${cmd}" in
   setup)
